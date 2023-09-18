@@ -1,0 +1,43 @@
+.navbar{
+    background-color: rgb(84, 34, 131);
+}
+.modal-body{
+   /* background:linear-gradient(rgb(123, 216, 123),rgb(138, 138, 206));*/
+   color:blue;
+}
+.modal-footer{
+    background-color: rgb(98, 62, 146);
+}
+.modal-header{
+    background-color: rgb(98, 62, 146);
+    color:rgb(231, 229, 238);
+}
+.btn1{
+    background-color: rgb(132, 235, 72);
+}
+/*.main{
+    background-color: rgb(196, 156, 233);
+}*/
+input.ng-invalid.ng-touched{
+    border-color: red;
+}
+span{
+    color:red;
+}
+.box{
+    border: 2px solid rgb(136, 240, 95);
+    background-color: rgb(248, 243, 235);
+}
+h3{
+    text-align: center;
+    
+    color:rgb(157, 30, 196);
+    margin-top: 10px;
+}
+.btn1{
+    background-color: rgb(30, 38, 141);
+    color:aliceblue;
+    height: 40px;
+    border-style: none;
+    border-radius: 5px;
+}

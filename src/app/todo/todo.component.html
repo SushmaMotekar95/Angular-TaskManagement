@@ -1,0 +1,92 @@
+<form class="main">
+  <!-- Task Title -->
+  <div class="task">
+    <h3>Task Management</h3>
+   </div>
+    
+<!--Search Bar & AddTask Button -->
+  <div class="row">
+    <div class="col-md-9 ">
+      <input  name="searchName" type="text" class="form-control box" placeholder="Search Status" [(ngModel)]="searchText">
+    </div>
+    <div class="col-md-3 ">
+      <button (click)="clickAddTask()"  class="btn1" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-plus-square" aria-hidden="true"> Add Task</i></button>
+    </div>
+  </div>
+<!-- Display data in Table(head & body)-->
+<table class="table mt-3 table-bordered text-center">
+    <thead>
+        <tr class="table-danger " >
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of taskData | filter: searchText | paginate:{id:'listing_pagination',itemsPerPage: 5, currentPage: page, totalItems: totalRecords} ">
+            <td>{{row.id}}</td>
+            <td>{{row.title}}</td>
+            <td>{{row.dueDate}}</td>
+            <td>{{row.status}}</td>
+            <!-- Delete and Edit Button-->
+            <td>
+                <a (click)="onEdit(row)" class="text-primary h3" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">    <i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                <a (click)="deleteTask(row)" class="text-danger mx-3 h3"  type="button1" data-bs-toggle="modal1" data-bs-target="#exampleModal1"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+ <!-- Pagination -->
+<div>
+  <pagination-controls class="page" id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page=$event"></pagination-controls>
+</div>
+<!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <!-- Model header -->
+          <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Task Details</h5>
+                <button type="button" class="text-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+            <!-- Model Body -->
+          <div class="modal-body">
+              <!-- Reactive Form -->
+              <form [formGroup]="formvalue">
+                <!-- Title Input -->
+                <div class="mb-3">
+                  <label for="exampleInputTitle" class="form-label">Title</label>
+                  <input type="text" formControlName="title" class="form-control" id="exampleInputTitle" >
+                  <!-- Required Validation -->
+                  <span *ngIf="formvalue.get('title').touched && formvalue.get('title').errors?.required">
+                    Title is Required
+                  </span>
+                </div>
+                <!-- Due Date Input -->
+                <div class="mb-3">
+                  <label for="exampleInputDate" class="form-label">Due Date</label>
+                  <input type="date" formControlName="dueDate" class="form-control" id="exampleInputDate">
+                </div>
+                <!-- Status dropDown list -->
+                <div class="mb-3">
+                    <label for="InputStatus" class="form-label">Status</label>
+                    <select name="dropdown" class="form-select form-select-sm mb-3" formControlName="status" (change)="changeStatus($event)" id="InputStatus">
+                      <option selected>Select Status</option>
+                      <option *ngFor="let status of status1" value={{status.name}}>{{status.name}}</option>
+                    </select>
+                </div>
+              </form>
+          </div>
+    
+        <!-- Model Footer(Add, Close & Update Button)-->
+        <div class="modal-footer">
+          <button type="button" *ngIf="showAdd" (click)="createTask()" class="btn btn-success">Add</button>
+          <button type="button" id="cancel" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          <button type="button" *ngIf="showUpdate" (click)="updateTask()" class="btn btn-success">Update</button>
+        </div>
+        </div>
+    </div>
+  </div>
+</form>
